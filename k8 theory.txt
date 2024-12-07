@@ -1,0 +1,96 @@
+k8 architecture
+
+ Master Node
+1) API server - Its a front end, to communicate & maintain configurations of Cluster
+2) Controller Manager - Controls the number of POD replicas & creations.
+3) Scheduler - Schedules the Pod activities.
+4) etcd -  Distributed key value db. All the details of the cluster will be stored & kept here.
+
+- Worker Node
+1) Kubelet - It is an agent/connectivity, to Monitor/ manage the containers in the Pod.
+2) Kubeproxy - Bridge between App_user & Application. It is a logical endpoint.
+3) POD - Grouped containers, functional units in K8S.
+4) Containers - Container runtime, K8S suppports Docker, Mesos, OpenVZ, Marathon.
+
+- Kubectl
+1) Its a tool used to communicate with the Kubernetes cluster.
+2) It connected with the APIServer for the communication
+3) ~/.kube/config file contains the cluster information and shares to kubectl
+4) kubectl command format,
+  life cycle pods
+  
+  Pending:   * Pod accepted but waiting for resources or node availability.
+  Running:   * All containers are created and at least one is actively running.
+  Succeeded: * All containers have completed successfully and won't be restarted.
+  Failed:    * At least one container exited with a failure status.
+  Unknown:   * Pod state cannot be determined due to communication issues within Kubernetes.
+  
+  
+  
+  
+
+cluster : * A set of nodes (machines) that run containerized applications managed by Kubernetes.
+
+Node : * A single machine in a Kubernetes cluster, which can be either a physical machine or a virtual machine
+
+pod : * The smallest and simplest Kubernetes object. A Pod represents a single instance of a 
+       running process in a cluster and can contain one or more containers.
+	  
+Namespace: * A namespace in Kubernetes is used to seprate and organize pods and other resources,
+              providing easier identification and management within a cluster
+			  
+Deployment: * here we configure 
+
+     apiVersion: like v1
+     kind: ex deployment, statefulset
+     metadata: 
+     spec: 
+     replicas: Specifies the number of identical pods to run (3 in this example).
+     selector: it will with service label then pod connectioning will happen
+     matchLabels: 
+     template: 
+     metadata: 
+     spec: 
+     containers: specifies with in the pod
+     name: container name like base image is nginux means ex: nginx
+     image: ex : apache,tomcat,nginux
+     ports: app port ex:8080
+
+
+Service:  it used connection between deployment and service for connection 
+
+types :   * cluster ip : it used to acess with in cluster 
+
+          * nodeport :  it used access application externally with ip of vm  
+		  NodePort services use a port in the range of 30000-32767.
+		  
+		  * loadbalancer : Suitable for applications with high traffic or external access requirements
+		   allowing load balancing of incoming traffic across multiple Pods.
+
+		 
+ ConfigMap: Stores non-sensitive configuration data as key-value pairs
+             for decoupling application configurations from container images.
+
+   Secret:   Stores sensitive information such as passwords, API tokens, and keys, securely within Kubernetes.
+   
+		   
+  volume: * it used mount path mention empty path in configuraion file for back and recovery 
+  
+  replicaset: * ReplicaSet in Kubernetes maintains a fixed number of identical Pod copies
+                ensuring the desired number is always running for reliability and scaling purposes.
+  staefull set :
+                  
+				  * pv :
+				  
+				  
+				  * pvc :
+		   
+		   
+	dameonset : * Ensures a copy of a Pod is running on all (or some) nodes in the cluster. 
+	             Useful for logging, monitoring, or other node-specific services.
+	   
+		   
+		   
+		   
+		   
+

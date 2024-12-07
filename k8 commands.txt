@@ -1,0 +1,52 @@
+minikube start --driver=docker
+chmod 777 /var/run/docker.sock         
+minikube version
+kubectl cluster-info
+kubectl get pod <podname>
+kubectl get service <servicenmae>
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl get pod
+kubectl delete pod <my-app-deployment-799c67bf8b-gnsl4>
+kubectl get replicaset 
+kubectl get pods -n my-namespace
+kubectl delete deployment my-app-deployment && kubectl delete deployment nginx-deployment  delte replicaset
+echo "QXdOdkk4Ny9sdGN3R1dNK0RhZ3dIa2VGMG9kSUpWQ3JDbGFFLzdaZw==" | base64 -d
+# Connect to a Pod
+kubectl exec -it my-pod -- /bin/sh
+# List Pods in all namespaces
+kubectl get pods --all-namespaces
+# View cluster information
+kubectl cluster-info
+# Expose a Deployment as a Service (ClusterIP)
+kubectl expose deployment my-deployment --port=80 --target-port=8080 --type=ClusterIP
+# List all ConfigMaps
+kubectl get configmaps -n my-namespace
+# Get Endpoints of a Service
+kubectl get endpoints my-service -n my-namespace
+# to check pod goinside pod 
+curl <pod-ip>:<port>
+ping <pod-ip>
+curl 10.100.123.4:8080
+#to check service connection
+curl <service-cluster-ip>:<port>
+ping <service-cluster-ip>
+curl 10.100.123.4:8080
+kubectl delete deployment my-app-deployment -n my-namespace
+kubectl delete deployment nginx-deployment -n my-namespace
+# List all ConfigMaps
+kubectl get configmaps -n my-namespace
+# Describe a ConfigMap
+kubectl describe configmap my-config -n my-namespace
+# List all Secrets
+kubectl get secrets -n my-namespace
+# Describe a Secret
+kubectl describe secret my-secret -n my-namespace
+# List all PersistentVolumes
+kubectl get pv
+# Describe a PersistentVolume
+kubectl describe pv my-pv
+# List all PersistentVolumeClaims
+kubectl get pvc
+# Describe a PersistentVolumeClaim
+kubectl describe pvc my-pvc
