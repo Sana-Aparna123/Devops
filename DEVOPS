@@ -1,0 +1,36 @@
+Day 1:
+Date:11-Dec-2024
+
+Agenda:
+---------
+1.why Devops?
+2.How was the market?
+3.syllabus an dependencies?
+4.Create a base lab in AWS for shell scripting ?
+5.why should i use a shell script?
+  -To resuce the TOIL(manual work)
+  -To automate the tasks
+5.Create a sample shell script and execute and understand the permissions?
+
+
+syllabus link:
+-------------
+https://drive.google.com/file/d/1H92BoC4nVKrv3crN1J2yy0zE8ZlEorEj/view
+
+
+
+Day 2:
+Date:11-Dec-2024
+
+Class-2:
+
+1. Create a github account for version control the code.
+
+2. Enabling GitHub Co-Pilot?
+
+3. Understanding Positional Params along with AWS CLI?
+
+4. Understand /dev/null file and redirect the output to it?
+
+5. Ways to redirect the outputs.
+
