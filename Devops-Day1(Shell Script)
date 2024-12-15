@@ -1,0 +1,254 @@
+Day 1:
+Date:11-Dec-2024
+
+Agenda:
+---------
+1.why Devops?
+2.How was the market?
+3.syllabus an dependencies?
+4.Create a base lab in AWS for shell scripting ? -->Ubuntu 22.04 linux machine
+5.why should i use a shell script?
+  -To resuce the TOIL(manual work)
+  -To automate the tasks
+5.Create a sample shell script and execute and understand the permissions?
+ - echo will help us in debugging
+6.Why should i use a script?
+     -- Scenario : I have 50 servers and I want to check which one is rechable and which one is down.
+             10.1.1.10 ...........10.1.1.59  -->we have to check that these all servers are rechable or not.So ping all servers which is very difficult so that's why we use scripting.
+
+
+syllabus link:
+-------------
+https://drive.google.com/file/d/1H92BoC4nVKrv3crN1J2yy0zE8ZlEorEj/view
+
+
+Process:
+----------
+*Create an VPC and create an instance with Ubuntu 22.04 linux machine in that vpc.
+ 
+*Create a folder with name SHELL-SCRIPTING and create file inside the folder with name servers.txt
+
+*Ask in github copilot give me 50 dns name servers if you ask it will give some dns websities
+
+*Login into ubuntu server and create a file with name servers.txt and copy the all name servers and paste it in servers.txt file.
+     
+servers.txt
+-----------------
+www.google.com
+www.facebook.com
+www.youtube.com
+www.amazon.com
+www.wikipedia.org
+www.reddit.com
+www.yahoo.com
+www.ebay.com
+www.netflix.com
+www.linkedin.com
+www.instagram.com
+www.twitter.com
+www.microsoft.com
+www.apple.com
+www.wordpress.com
+www.bing.com
+www.pinterest.com
+www.adobe.com
+www.tumblr.com
+www.imgur.com
+www.paypal.com
+www.stackoverflow.com
+www.github.com
+www.quora.com
+www.dropbox.com
+www.salesforce.com
+www.spotify.com
+www.slack.com
+www.airbnb.com
+www.etsy.com
+www.craigslist.org
+www.nytimes.com
+www.bbc.com
+www.cnn.com
+www.foxnews.com
+www.huffpost.com
+www.forbes.com
+www.bloomberg.com
+www.wsj.com
+www.theguardian.com
+www.nbcnews.com
+www.usatoday.com
+www.latimes.com
+www.chicagotribune.com
+www.washingtonpost.com
+www.time.com
+www.newsweek.com
+www.reuters.com
+www.apnews.com
+www.nationalgeographic.com
+    
+  > sudo su -
+  > nano servers.txt
+  > cat servers.txt
+  > for SERVER in $(cat servers.txt)   -->it will ping to all servers at a time through for loop
+    do 
+    ping -c 2 $SERVER
+    done
+  > for SERVER in $(cat servers.txt)
+    do  
+    ping -c 2 $SERVER | tee -a /tmp/servers
+    done
+  > cat /tmp/servers | grep -i '64 bytes'
+  > cat /tmp/servers | grep -i '64 bytes' | wc -l   -->How many servers reached or not reached so we can check here
+  > cat /tmp/servers | grep -i -v '64 bytes'
+  > cat /tmp/servers | grep -i -n '64 bytes'
+
+Check_Server_Status.sh
+------------------------
+#!/bin/bash
+A=10
+B=20
+C="Welcome to Devops"
+
+#Accessing the variables in shell script 
+echo $A
+echo ${B}
+echo "${C}"
+
+#positional parameters
+echo $0
+echo $1
+echo $2
+echo $3
+  
+  or
+ 
+#!/bin/bash
+A=10
+B=20
+C="Welcome to Devops"
+#Accessing the variables in shell script 
+echo $A
+echo ${B}
+echo "${C}"
+#positional arguments
+echo "The argument at postion 0 is $0"
+echo "The argument at position 1 is $1"
+echo "The argument at position 2 is $2"
+echo "The argument at position 3 is $3"
+
+
+output:
+-------
+10
+20
+Welcome to Devops
+Check_Server_Status.sh
+appu
+rakesh
+nani
+
+or
+
+10
+20
+Welcome to Devops
+The argument at postion 0 is Check_Server_Status.sh
+The argument at position 1 is appu
+The argument at position 2 is rakesh
+The argument at position 3 is nani
+root@ip-10-43-1-207:~# nano Check_Server_Status.sh 
+
+
+ReadMe.md file
+----------------
+#Packages needed for scripting 
+1. apt update && apt install -y net-tools -y jq python3-pip
+2. Install AWS CLI or Azure CLI
+
+example:
+--------
+permisions in linux in numbers and alphbet
+-----------------------------------------------
+
+-rw-r--r--  (Root,Group,Others)
+ R  G  O
+
+r - 4
+w - 2
+x - 1
+
+-rw-r--r--   1 root root  116 Dec 15 07:02 Check_Server_Status.sh
+           # -rw-r--r-- = 644  
+           
+chmod 777 Check_Server_Status.sh  -->all permissions
+chmod 000 Check_Server_Status.sh  -->Nothing permissions
+
+u - user
+o - owner
+g - group
+
+chmod u+x Check_Server_Status.sh  --> giving execute permission to user
+chmod o+rwx Check_Server_Status.sh  -->giving read,write,execute permissions to others
+                      
+Two ways executing the shell script
+-----------------------------------
+bash Check_Server_Status.sh  or 
+./Check_Server_Status.sh        
+ 
+ 
+ 
+Note:
+-----
+1.Configure the github copilot and integrate it into vscode.
+2.we can open terminal from vscode directly using ctrl+Alt+T shortcut command.
+3.Install the github copilot extension in vscode.EXtension(GitHub Copilot Chat and GitHub Copilot) and your vscode version should be cpmpatible the github copilot.Go to vscode and right click there copilot-->add file to chat or Add file to copilot edits select it tehre it will open chart and started the typing whatever you want.
+4.nc command -->netcat
+5.we can reduce the TOIL work by using the scripting -->TOIL means manual work
+6.where $0 positional argument? --> shell script file will occupy it by default.the script will take the place of $0
+
+realtime use case:
+-------------------
+#Testing the connectivity of all 50 servers
+for SERVER in $(cat servers.txt) 
+do
+ping -c 1 $SERVER > /dev/null
+if [ $? -eq 0 ]
+then
+echo "$SERVER is reachable"
+else
+echo "$SERVER is not reachable"
+fi
+done
+
+or 
+
+for i in $(cat servers.txt)
+do
+ping -c 1 $i > /dev/null
+if [ $? -eq 0 ]
+then
+echo "Server $i reachable"
+else
+echo "Seerver $i not reachable"
+fi
+done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
