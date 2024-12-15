@@ -1,0 +1,121 @@
+Day 2:
+Date:11-Dec-2024
+
+Class-2:
+
+1. Create a github account for version control the code.
+
+2. Enabling GitHub Co-Pilot?
+
+3. Understanding Positional Params along with AWS CLI?
+
+4. Understand /dev/null file and redirect the output to it?
+
+5. Ways to redirect the outputs.
+
+
+github:
+--------
+
+creating a new public key: -->only one time its enough for single github account 
+------------------------------
+ssh-keygen -t rsa -b 4096 -C "aparnassana2001@gmail.com"
+
+cat /home/bootlabsuser/.ssh/id_rsa.pub
+
+Adding this ublic key in github account: -->github account profile-->settings-->SSH and GPG key-->select SSH and create it.
+--------------------------------------------
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC81rutzcynoUNHvWAHq1YcQ9y8uTiYfVRKoEELCGV2CSKtRjjdHUW0x2yECK5QIWwfjsEfhznTipVw1x5RI3uWOzxY3tYvJOyc6Lga3/juqqFDEgeiYzU7CgTfKZCs5J3x6nSVDeWzJIqFZNs09/xkylVXUXnDLB4CpTAcDZlbcILDuZtLoouXEsZEkjKen2AE/C7eodKXWoheL2CRhUNguqqkHkzluy7L4/1neskN4f0xV6RzFI0c1JFQZa6y9WXMaeHjgTJo51TwcfFr/JRiw5FW4/IGjDphHbnffvJQE10Hevq7WBoBOSd52jfYEyybO9RcB+0LgYGJzf/mbz33mdTX+QRpVX53EjCotRVYpd5gjkzqq5XGbgyIEYA95berS+cHclYJL0rYa65iIA2yjqTaDckKQgA03rcFBQhleIySR9Ni4/7cgtiqGPqTNN4Nn++/tAYsaLQx+8XLhzGVG2d6qkvUcnRVCJWYd0ApL/589agyxJ/bevZJdHChlUGinQqMm79xvEOj2jCaVGBsXRZwR0KNxwXvnu6SvhXCWyOm8kUfdTa0/CLLzxEYHwvvkPSy9kKXLvItRFgVH9Kl91PJedEN0m7nXFCwsoXdRc36afIGyHtFFVNEHsZWOrJDlGue1RLIOJCyg45asbUDGSX6SCVJg22WLihQmmL5Lw== aparnassana2001@gmail.com
+
+
+*create a new repo in github
+
+*push that code in new repo by following commands
+   git init
+   git status
+   git add .
+   git commit -m "Shell scripting codebase "
+   git remote add origin "git@github.com:Sana-Aparna123/SHELL-SCRIPTING.git"
+   git remote -v
+   git push origin master
+   
+ 
+Commands
+-------------   
+echo "Devara movie by Ramarao"
+    6  X="Nandamoori Tharaka"
+    7  echo "Devara movie by $X Ramarao"
+    8  echo "Devara movie by ${X} Ramarao"
+    9  echo "Devara movie by ${X}Ramarao"
+   10  X='Nandamoori Tharaka'
+   11  echo "Devara movie by ${X}Ramarao"
+   12  echo "Devara movie by ${X} Ramarao"
+   13  echo 'Devara movie by ${X} Ramarao'
+   14  echo "Devara movie by ${X} Ramarao" > /tmp/devara
+   15  cat /tmp/devara
+   
+echo "Devara movie by ${X} Ramarao" > /dev/null 
+cat /dev/null -->Data is not stored in it.
+
+apt update > /dev/null  -->update details it wont display but it will run background
+
+apt-get update > /dev/null -->warning also not come
+   
+   
+output-redirect.sh
+------------------
+#!/bin/bash
+X="Allu"
+Y="Nandamoori Tharaka"
+
+
+echo "Pushpa movie by ${X} Arjun" > /tmp/pushpa  # Overwrite existing data
+
+echo "Devara movie by ${Y} Ramarao" >> /tmp/devara # Append to existing data
+
+echo "Pushpa movie by ${X} Arjun" | tee /tmp/pushpa # Print on screen and Overwrite existing data
+
+echo "Devara movie by ${Y} Ramarao" | tee -a /tmp/devara #Print on screen and Append to existing data
+
+
+*any input or command will have an success state and failure state
+
+std-script.sh
+----------------
+
+1. STDIN(Standard In) = 0
+2. STDOUT(Standard Output) = 1
+3. STDERR(Standard Error) = 2
+
+#!/bin/bash
+last reboot | head -5 #give me last five reboot times
+megastar
+df -h | grep -i -w '/'
+superstar
+uptime
+powerstar
+free -h
+
+
+> ./std-script.sh 2> /dev/null -->only print success info
+> ./std-script.sh 1> /dev/null -->only print error info
+> ./std-script.sh > /dev/null 2>&1  --> redirecting the standard error into standard output and send both to the /dev/null
+> ./std-script.sh > /tmp/test 2>&1
+> cat /tmp/test
+> ./std-script.sh > /tmp/test1 1>&2
+> cat /tmp/test1
+
+Note:
+-----
+Shell format extension in vscode -->foxundermoon
+*We can change nother name in the place of origin	
+   git remote add appu "git@github.com:Sana-Aparna123/SHELL-SCRIPTING.git"
+   
+*If we use single quotes for string values will not substitue.If we use double quotes for string values will be substituted.
+
+ echo "Devara movie by ${X} Ramarao" > /tmp/devara  ( > --> will Overwrite the existing data if you use multiple tiles also)
+ 
+ echo "Devara movie by ${X} Ramarao" >> /tmp/devara ( >> --> will append to existing data.if we use multiple times it will append data mutiple times.)
+ 
+
+
