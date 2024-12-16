@@ -1,0 +1,190 @@
+Day 2:
+Date:13-Dec-2024
+
+Class-3 :
+----------
+Understand special params:
+$? --->exit code for success and error inputs.Apart from "0" if you get anything we will consider as failure.or Find the Exit code to previous command.Anything different from 0 is a failure.
+$@  -->It is used to handle the multiple arguments/parameters in script or Assign all args to same variable.
+$*  --> Assign all args to same variable.
+"$*" --> If the args passded has space
+$#  -->Calculates the number of arguments/parameters is given to a script.
+$!  -->It will findout the recent process or PID which runs in background. or a special shell variable that stores the PID of the most recently executed background process
+ 
+example for $!
+-----------
+ping -c 3 www.google.com &
+echo $!
+
+$$ --> variable is the PID(Process Identifer) of the currently running shell.
+ 
+example for $$
+---------------
+echo $$
+op:3323
+
+exit
+ 
+echo $$
+3329
+
+
+
+
+process:
+---------
+*login to the Ubuntu server 
+
+*Install aws-cli inside server.
+  > curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  > apt install -y unzip
+  > unzip awscliv2.zip  
+  > sudo ./aws/install 
+
+*Go to IAM User and create an userwitl permissions like AmazonEC2ReadOnlyAccess and AmazonS3ReadOnlyAccess access and generate access key and secret key for that user.
+
+
+#Assigning Env variables
+export AWS_ACCESS_KEY_ID='AKIA2KX4BUZ2X4XTJ7NF'
+export AWS_SECRET_ACCESS_KEY='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'
+export AWS_DEFAULT_REGION='us-east-1'
+
+> env | grep AWS 
+
+*If we give the environment variables directly when we close the session,the variables will be lost.So we will store this environment varibles in ".bashrc" file.
+
+nano .bashrc 
+-------------
+#Assigning Env variables
+export AWS_ACCESS_KEY_ID='AKIA2KX4BUZ2X4XTJ7NF'
+export AWS_SECRET_ACCESS_KEY='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'
+export AWS_DEFAULT_REGION='us-east-1'
+
+
+aws-script-positionargs.sh
+--------------------------
+# #!/bin/bash
+# echo "you have given $# arguments to this script"
+# REGION1=$1 # positional parameter
+# REGION2=$2
+# echo "Lets gets the vpcs for ${REGION1}"
+# aws ec2 describe-vpcs --region $1 | jq ".Vpcs[].VpcId" -r
+
+# echo "Lets gets the vpcs for ${REGION2}"
+# aws ec2 describe-vpcs --region $2 | jq ".Vpcs[].VpcId" -r
+# aws ec2 describe-vpcs --region $1 | jq -j '.Vpcs[].VpcId + " " ,.Vpcs[].CidrBlock + "\n"' -r
+# jq -r '"Name: \(.name), Age: \(.age)"' sample_data.json
+
+# if [ $# -lt 2 ]; then
+#     echo "Usage: $0 <region1> <region2> ..."
+#     exit 1
+# fi
+
+# for REGION in "$@"; do
+#     echo "Lets gets the vpcs for ${REGION}"
+#     aws ec2 describe-vpcs --region ${REGION} | jq ".Vpcs[].VpcId" -r
+# done
+
+#!/bin/bash
+if [ $# -gt 0 ]; then
+    REGION1=$1 # positional parameter
+    REGION2=$2
+    REGION3=$3
+    echo "Lets gets the vpcs for ${REGION1}"
+    aws ec2 describe-vpcs --region $1 | jq ".Vpcs[].VpcId" -r
+    echo "Lets gets the vpcs for ${REGION2}"
+    aws ec2 describe-vpcs --region $2 | jq ".Vpcs[].VpcId" -r
+    echo "Lets gets the vpcs for ${REGION3}"
+    aws ec2 describe-vpcs --region $3 | jq ".Vpcs[].VpcId" -r
+else
+    echo "you have given $# arguments to this script.So please provide atleast one region"
+fi
+
+
+
+
+aws-script-multiargs.sh
+-------------------------
+#!/bin/bash
+echo "Testing $@"
+if [ $# -gt 0 ]; then
+REGIONS=$@
+for REGION in $REGIONS
+do
+    echo "lets get the vpcs dor ${REGION}"
+    aws ec2 describe-vpcs --region ${REGION} | jq ".Vpcs[].VpcId" -r  
+done   
+else
+    echo "you have given $# arguments to this script.So please provide atleast one region based on arguments"
+fi
+
+echo '----------------------------------------------------------------------------------------------------'
+
+echo "Testing $*"
+if [ $# -gt 0 ]; then
+REGIONS=$*
+for REGION in $REGIONS
+do
+    echo "lets get the vpcs dor ${REGION}"
+    aws ec2 describe-vpcs --region ${REGION} | jq ".Vpcs[].VpcId" -r  
+done   
+else
+    echo "you have given $# arguments to this script.So please provide atleast one region based on arguments"
+fi
+
+echo '----------------------------------------------------------------------------------------------------'
+
+echo 'Testing "$*"'
+if [ $# -gt 0 ]; then
+REGIONS="$*"
+for REGION in $REGIONS
+do
+    echo "lets get the vpcs dor ${REGION}"
+    aws ec2 describe-vpcs --region ${REGION} | jq ".Vpcs[].VpcId" -r  
+done   
+else
+    echo "you have given $# arguments to this script.So please provide atleast one region based on arguments"
+fi
+
+# if [ $# -gt 0 ]; then
+# for REGION in $@
+# do
+#     echo "lets get the vpcs dor ${REGION}"
+#     aws ec2 describe-vpcs --region ${REGION} | jq ".Vpcs[].VpcId" -r  
+# done   
+# else
+#     echo "you have given $# arguments to this script.So please provide atleast one region based on arguments"
+# fi
+
+
+
+> source .bashrc
+> env | grep AWS
+
+> aws ec2 describe-vpcs --region us-east-1 | jq
+
+> aws ec2 describe-vpcs --region us-east-1 | jq ".Vpcs[]"
+
+> aws ec2 describe-vpcs --region us-east-1 | jq ".Vpcs[].VpcId"
+
+> aws ec2 describe-vpcs --region us-east-1 | jq ".Vpcs[].CidrBlock"
+
+> aws ec2 describe-vpcs --region us-east-1 | jq ".Vpcs[].CidrBlock" -r   --> it will display cidr ranges of vpc without quotes if we use(-r)
+
+> aws ec2 describe-vpcs --region us-east-1 | jq ".Vpcs[].VpcId" -r 
+
+> nano ~/.bashrc
+> source ~/.bashrc
+
+
+Note:
+-----
+jq --> json parser .it will take the json input and parse it to readable format to undertsand info to everyone.
+ 
+"$@": Treats each argument as a separate entity.
+Each argument is preserved as a distinct word, even if it contains spaces or special characters.
+"$*": Treats all arguments as a single string, concatenated with spaces.
+Arguments are merged into a single string, and any individual argument boundaries are lost.
+
+   
+
