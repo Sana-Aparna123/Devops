@@ -7,7 +7,7 @@ Understand special params:
 $? --->exit code for success and error inputs.Apart from "0" if you get anything we will consider as failure.or Find the Exit code to previous command.Anything different from 0 is a failure.
 $@  -->It is used to handle the multiple arguments/parameters in script or Assign all args to same variable.
 $*  --> Assign all args to same variable.
-"$*" --> If the args passded has space
+"$*" --> If the args passed has space
 $#  -->Calculates the number of arguments/parameters is given to a script.
 $!  -->It will findout the recent process or PID which runs in background. or a special shell variable that stores the PID of the most recently executed background process
  
